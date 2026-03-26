@@ -27,7 +27,7 @@ uv sync
 с закреплённого тега, а неработающая транзитивная зависимость `tinkoff` исключается с помощью
 конфигурации `[tool.uv]` в файле `pyproject.toml`
 
-## Run API
+## Запуск API
 
 ```bash
 uv run uvicorn app:app --reload --host 0.0.0.0 --port 8000
