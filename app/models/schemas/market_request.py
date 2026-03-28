@@ -5,7 +5,7 @@ from typing import Optional
 
 @dataclass
 class ChartRequest:
-    figi: str
+    ticker: str
     timeframe: str
     days_count: int
     from_: Optional[datetime] = None

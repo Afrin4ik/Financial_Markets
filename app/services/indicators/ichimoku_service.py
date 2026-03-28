@@ -11,7 +11,7 @@ T_l = 52
 
 def calculate_line(candles: list[CandleData], time_frame: int) -> np.ndarray:
     if time_frame <= 0:
-        raise ValueError("Timeframe must be greater than 0")
+        raise ValueError("Таймфрейм должен быть больше 0")
 
     count_candles: int = len(candles)
 

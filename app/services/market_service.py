@@ -22,9 +22,9 @@ def build_chart_data(request: ChartRequest) -> ChartResponse:
     cloud = build_cloud_bands(ichimoku.Senkou_A, ichimoku.Senkou_B)
 
     return ChartResponse(
-        asset=request.figi,
-        days=request.days_count,
+        ticker=request.ticker,
         timeframe=request.timeframe,
+        days_count=request.days_count,
         candles=[
             CandleResponse(
                 open=c.open,

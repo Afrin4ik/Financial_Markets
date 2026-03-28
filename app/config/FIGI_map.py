@@ -1,4 +1,5 @@
 FIGIs: dict[str, str] = {
+    # ticker: FIGI
     "sber": "BBG004730N88", # сбер
     "ibm": "BBG000BLNNH6", # IBM
     "aapl": "BBG000B9XRY4", # apple

@@ -28,9 +28,9 @@ class CloudBandResponse(BaseModel):
 
 
 class ChartResponse(BaseModel):
-    asset: str
-    days: int
+    ticker: str
     timeframe: str
+    days_count: int
     candles: list[CandleResponse]
     ichimoku: IchimokuResponse
     cloud: list[CloudBandResponse]

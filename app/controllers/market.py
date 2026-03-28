@@ -12,19 +12,19 @@ router = APIRouter(prefix="/market", tags=["market"])
 
 @router.get("/chart")
 def read_chart(
-    asset: str = Query(default=..., description="Название актива, например: sber"),
-    days: int = Query(default=..., ge=1, le=3650, description="Количество дней"),
-    timeframe: str = Query(default=..., description="Таймфрейм, например: 4h"),
+    ticker: str = Query(default=..., description="Название актива (ticker)"),
+    timeframe: str = Query(default=..., description="Таймфрейм (timeframe)"),
+    days_count: int = Query(default=..., ge=1, le=3650, description="Количество дней"),
 ) -> ChartResponse:
-    asset_key = asset.strip().lower()
+    ticker_key = ticker.strip().lower()
     timeframe_key = timeframe.strip()
 
-    if asset_key not in FIGIs:
+    if ticker_key not in FIGIs:
         raise HTTPException(
             status_code=422,
             detail={
                 "message": "Неизвестный актив",
-                "Поддерживаемые активы": sorted(FIGIs.keys())
+                "supported_assets": sorted(FIGIs.keys())
             },
         )
     if timeframe_key not in TimeFrame:
@@ -32,11 +32,11 @@ def read_chart(
             status_code=422,
             detail={
                 "message": "Неизвестный таймфрейм",
-                "Поддерживаемые таймфреймы": sorted(TimeFrame.keys()),
+                "supported_timeframes": sorted(TimeFrame.keys()),
             },
         )
 
-    request = ChartRequest(figi=asset_key, days_count=days, timeframe=timeframe_key)
+    request = ChartRequest(ticker=ticker_key, days_count=days_count, timeframe=timeframe_key)
 
     try:
         return build_chart_data(request=request)
@@ -48,9 +48,9 @@ def read_chart(
 
 @router.get("/assets")
 def get_supported_assets() -> dict[str, list[str]]:
-    return {"assets": sorted(FIGIs.keys())}
+    return {"supported_assets": sorted(FIGIs.keys())}
 
 
 @router.get("/timeframes")
 def get_supported_timeframes() -> dict[str, list[str]]:
-    return {"timeframes": sorted(TimeFrame.keys())}
+    return {"supported_timeframes": sorted(TimeFrame.keys())}

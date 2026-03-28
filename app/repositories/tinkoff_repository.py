@@ -1,23 +1,22 @@
 from ..config.settings import TOKEN
 from tinkoff.invest import Client
-# from datetime import datetime, timedelta, timezone
 from ..models.entities.candle import CandleData
 from ..config.FIGI_map import FIGIs
 from ..config.timeframe_map import TimeFrame
 from ..models.schemas.market_request import ChartRequest
 
 
-def _quotation_to_float(money_value) -> float:
-    return money_value.units + (money_value.nano / 1e9)
+def _quotation_to_float(value) -> float:
+    return value.units + (value.nano / 1e9)
 
 
 def get_candles_from_tinkoff(request: ChartRequest) -> list[CandleData]:
     if not TOKEN:
-        raise RuntimeError("Токен API не найден!")
+        raise RuntimeError("API токен не найден!")
 
     with Client(TOKEN) as client:
         response = client.get_all_candles(
-            instrument_id = FIGIs[request.figi],
+            instrument_id = FIGIs[request.ticker],
             interval = TimeFrame[request.timeframe],
             from_=request.from_,
             to=request.to_
@@ -33,5 +32,4 @@ def get_candles_from_tinkoff(request: ChartRequest) -> list[CandleData]:
                     volume=candle.volume,
                     time=candle.time
                 ))
-        # print(candles)
         return candles
