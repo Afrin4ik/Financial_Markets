@@ -1,10 +1,7 @@
-from tinkoff.invest import CandleInterval
-
-
 FIGIs: dict[str, str] = {
     "sber": "BBG004730N88", # сбер
     "ibm": "BBG000BLNNH6", # IBM
-    "appl": "BBG000B9XRY4", # apple
+    "aapl": "BBG000B9XRY4", # apple
     "gazp": "BBG004730RP0", # газпром
     "sibn": "BBG004S684M6", # газпром нефть
     "tatn": "BBG004RVFFC0", # татнефть

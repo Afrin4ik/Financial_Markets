@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass
@@ -8,4 +9,4 @@ class CandleData:
     low: float
     high: float
     volume: float
-    time: float
+    time: datetime

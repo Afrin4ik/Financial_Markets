@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-from typing import List
 import numpy as np
 from ...models.entities.candle import CandleData
 from ...models.entities.ichimoku import IchimokuData
@@ -11,7 +9,7 @@ T_m = 26
 T_l = 52
 
 
-def calculate_line(candles: List[CandleData], time_frame: int) -> np.ndarray:
+def calculate_line(candles: list[CandleData], time_frame: int) -> np.ndarray:
     if time_frame <= 0:
         raise ValueError("Timeframe must be greater than 0")
 
@@ -53,12 +51,12 @@ def shift_backward(values: np.ndarray, shift: int) -> np.ndarray:
     return result
 
 
-def calculate_Ichimoku(candles: List[CandleData]) -> IchimokuData:
+def calculate_Ichimoku(candles: list[CandleData]) -> IchimokuData:
     Tenkan = calculate_line(candles, T_s)
     Kijun = calculate_line(candles, T_m)
     Senkou_A = shift_forward((Tenkan + Kijun) / 2.0, T_m)
     Senkou_B = shift_forward(calculate_line(candles, T_l), T_m)
-    closes = np.array([c.close for c in candles])
+    closes = np.array([c.close for c in candles], dtype=np.float64)
     Chikou = shift_backward(closes, T_m)
 
     return IchimokuData(
@@ -66,5 +64,5 @@ def calculate_Ichimoku(candles: List[CandleData]) -> IchimokuData:
         Kijun=Kijun,
         Senkou_A=Senkou_A,
         Senkou_B=Senkou_B,
-        Chikou=Chikou
+        Chikou=Chikou,
     )
