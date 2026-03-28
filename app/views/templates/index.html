@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Markets</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <main class="layout">
+        <section class="panel">
+            <p class="eyebrow">Asset Charts</p>
+            <h1>Выберите параметры графика</h1>
+            <p class="subtitle">Выберите актив, таймфрейм и интервал в днях</p>
+
+            <form id="market-form" class="form-grid">
+                <label class="field">
+                    <span>Актив</span>
+                    <select id="ticker" name="ticker" required>
+                        <option value="" disabled selected>Загрузка активов...</option>
+                    </select>
+                </label>
+
+                <label class="field">
+                    <span>Таймфрейм</span>
+                    <select id="timeframe" name="timeframe" required>
+                        <option value="" disabled selected>Загрузка таймфреймов...</option>
+                    </select>
+                </label>
+
+                <label class="field">
+                    <span>Количество дней</span>
+                    <input id="days-count" name="days_count" type="number" min="1" max="3650" value="10" required>
+                </label>
+
+                <button type="submit" id="submit-btn">Получить данные</button>
+            </form>
+
+            <div id="status" class="status" aria-live="polite"></div>
+            <pre id="request-preview" class="request-preview" hidden></pre>
+        </section>
+    </main>
+
+    <script src="/static/js/chart.js" defer></script>
+</body>
+
+</html>
