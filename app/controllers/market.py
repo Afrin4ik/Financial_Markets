@@ -53,4 +53,4 @@ def get_supported_assets() -> dict[str, list[str]]:
 
 @router.get("/timeframes")
 def get_supported_timeframes() -> dict[str, list[str]]:
-    return {"supported_timeframes": sorted(TimeFrame.keys())}
+    return {"supported_timeframes": TimeFrame.keys()}
