@@ -22,7 +22,7 @@ const CHART_LAYOUT = {
         y: -0.2,
     },
     paper_bgcolor: "rgba(0,0,0,0)",
-    plot_bgcolor: "#ffffff",
+    plot_bgcolor: "rgba(255, 255, 255, 1)",
 };
 
 const CHART_CONFIG = {
@@ -32,11 +32,11 @@ const CHART_CONFIG = {
 };
 
 const ICHIMOKU_LINES = [
-    { key: "tenkan", name: "Tenkan", color: "#0088cc", width: 1.5 },
-    { key: "kijun", name: "Kijun", color: "#ea8f00", width: 1.5 },
-    { key: "chikou", name: "Chikou", color: "#5b2a86", width: 1.2 },
-    { key: "senkou_a", name: "Senkou A", color: "#1f9d55", width: 1.2 },
-    { key: "senkou_b", name: "Senkou B", color: "#b01e44", width: 1.2 },
+    { key: "tenkan", name: "Tenkan", color: "rgba(0, 136, 204, 1)", width: 1.5 },
+    { key: "kijun", name: "Kijun", color: "rgba(234, 143, 0, 1)", width: 1.5 },
+    { key: "chikou", name: "Chikou", color: "rgba(91, 42, 134, 1)", width: 1.2 },
+    { key: "senkou_a", name: "Senkou A", color: "rgba(31, 157, 85, 1)", width: 1.2 },
+    { key: "senkou_b", name: "Senkou B", color: "rgba(176, 30, 68, 1)", width: 1.2 },
 ];
 
 
@@ -117,6 +117,30 @@ function buildIchimokuTraces(x, ichimoku) {
 }
 
 
+function buildCandlestickTrace(x, open, high, low, close) {
+    return {
+        type: "candlestick",
+        x,
+        open,
+        high,
+        low,
+        close,
+        name: "Свечи",
+        visible: true,
+        increasing: {
+            line: { color: "rgba(15, 139, 113, 1)", width: 1.2 },
+            fillcolor: "rgba(15, 139, 113, 0.45)",
+        },
+        decreasing: {
+            line: { color: "rgba(209, 73, 91, 1)", width: 1.2 },
+            fillcolor: "rgba(209, 73, 91, 0.45)",
+        },
+        whiskerwidth: 0.7,
+        opacity: 1,
+    };
+}
+
+
 function renderChart(payload) {
     const candlesLength = payload.candles.length;
     const x = new Array(candlesLength);
@@ -128,10 +152,10 @@ function renderChart(payload) {
     for (let idx = 0; idx < candlesLength; idx += 1) {
         const candle = payload.candles[idx];
         x[idx] = candle.time;
-        open[idx] = candle.open;
-        high[idx] = candle.high;
-        low[idx] = candle.low;
-        close[idx] = candle.close;
+        open[idx] = Number(candle.open);
+        high[idx] = Number(candle.high);
+        low[idx] = Number(candle.low);
+        close[idx] = Number(candle.close);
     }
 
     const cloudTraces = buildCloudTraces(x, payload.cloud || []);
@@ -145,17 +169,7 @@ function renderChart(payload) {
         traceIndex += 1;
     }
 
-    traces[traceIndex] = {
-        type: "candlestick",
-        x,
-        open,
-        high,
-        low,
-        close,
-        name: "Свечи",
-        increasing: { line: { color: "#0f8b71" } },
-        decreasing: { line: { color: "#d1495b" } },
-    };
+    traces[traceIndex] = buildCandlestickTrace(x, open, high, low, close);
     traceIndex += 1;
 
     for (let idx = 0; idx < ichimokuTraces.length; idx += 1) {
@@ -163,12 +177,21 @@ function renderChart(payload) {
         traceIndex += 1;
     }
 
-    Plotly.react(
-        chartNode,
-        traces,
-        CHART_LAYOUT,
-        CHART_CONFIG,
-    );
+    if (chartNode.data && chartNode.layout) {
+        Plotly.react(
+            chartNode,
+            traces,
+            CHART_LAYOUT,
+            CHART_CONFIG,
+        );
+    } else {
+        Plotly.newPlot(
+            chartNode,
+            traces,
+            CHART_LAYOUT,
+            CHART_CONFIG,
+        );
+    }
 }
 
 

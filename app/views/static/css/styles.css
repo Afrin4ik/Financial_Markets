@@ -1,15 +1,15 @@
 :root {
-    --bg-start: #f6f8e9;
-    --bg-end: #d7e7ff;
+    --bg-start: rgba(246, 248, 233, 1);
+    --bg-end: rgba(215, 231, 255, 1);
     --panel-bg: rgba(255, 255, 255, 0.84);
     --panel-border: rgba(22, 50, 92, 0.15);
-    --text-main: #13213b;
-    --text-muted: #4a5b77;
-    --accent: #0c7a6d;
-    --accent-hover: #095f55;
+    --text-main: rgba(19, 33, 59, 1);
+    --text-muted: rgba(74, 91, 119, 1);
+    --accent: rgba(12, 122, 109, 1);
+    --accent-hover: rgba(9, 95, 85, 1);
     --input-bg: rgba(255, 255, 255, 0.9);
-    --danger: #b63a3a;
-    --ok: #166a44;
+    --danger: rgba(182, 58, 58, 1);
+    --ok: rgba(22, 106, 68, 1);
 }
 
 * {
@@ -50,7 +50,7 @@ body {
     letter-spacing: 0.1em;
     font-size: 12px;
     font-weight: 700;
-    color: #3e5276;
+    color: rgba(62, 82, 118, 1);
 }
 
 h1 {
@@ -103,7 +103,7 @@ button {
     height: 48px;
     border: none;
     font-weight: 700;
-    color: #fff;
+    color: rgba(255, 255, 255, 1);
     background: var(--accent);
     cursor: pointer;
     transition: transform 0.15s ease, background-color 0.15s ease;
@@ -157,11 +157,11 @@ button:disabled {
     height: 42px;
     padding: 0 18px;
     border-radius: 10px;
-    background: #31528f;
+    background: rgba(49, 82, 143, 1);
 }
 
 .back-btn:hover {
-    background: #263f6e;
+    background: rgba(38, 63, 110, 1);
 }
 
 .chart-container {
@@ -171,7 +171,7 @@ button:disabled {
     margin-top: 8px;
     border-radius: 14px;
     border: 1px solid rgba(19, 33, 59, 0.14);
-    background: #ffffff;
+    background: rgba(255, 255, 255, 1);
     overflow: hidden;
 }
 
