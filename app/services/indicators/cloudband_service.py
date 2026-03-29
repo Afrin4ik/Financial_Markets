@@ -24,8 +24,7 @@ def build_cloud_bands(senkou_a: np.ndarray, senkou_b: np.ndarray) -> list[CloudB
                 trend="up",
                 y1=_to_optional_float_list(up_y1),
                 y2=_to_optional_float_list(up_y2),
-                color="#9be69b",
-                alpha=0.25,
+                color="rgba(80, 186, 108, 0.24)",
             )
         )
 
@@ -35,8 +34,7 @@ def build_cloud_bands(senkou_a: np.ndarray, senkou_b: np.ndarray) -> list[CloudB
                 trend="down",
                 y1=_to_optional_float_list(down_y1),
                 y2=_to_optional_float_list(down_y2),
-                color="#f2a2a2",
-                alpha=0.25,
+                color="rgba(213, 92, 92, 0.24)",
             )
         )
 

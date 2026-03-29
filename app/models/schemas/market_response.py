@@ -24,7 +24,6 @@ class CloudBandResponse(BaseModel):
     y1: list[float | None]
     y2: list[float | None]
     color: str
-    alpha: float
 
 
 class ChartResponse(BaseModel):
