@@ -37,7 +37,7 @@ function fillSelect(selectNode, values, placeholderText) {
 
 
 async function loadReferenceData() {
-    setStatus("Загрузка доступных активов и таймфреймов...");
+    setStatus("Загрузка доступных активов и таймфреймов...", "");
     try {
         const [assetsResp, timeframesResp] = await Promise.all([
             fetch("/market/assets"),
@@ -45,7 +45,7 @@ async function loadReferenceData() {
         ]);
 
         if (!assetsResp.ok || !timeframesResp.ok) {
-            throw new Error("Не удалось получить справочные данные");
+            throw new Error("Не удалось получить данные об активах или таймфреймах");
         }
 
         const assetsData = await assetsResp.json();
@@ -69,12 +69,12 @@ form.addEventListener("submit", async (event) => {
     const daysCount = Number(daysInput.value);
 
     if (!ticker || !timeframe || !daysCount) {
-        setStatus("Заполни все поля формы", "error");
+        setStatus("Заполните все поля формы", "error");
         return;
     }
 
     submitBtn.disabled = true;
-    setStatus("Отправление запроса за данными...", "");
+    setStatus("Отправление запроса...", "");
 
     const query = new URLSearchParams({
         ticker,
