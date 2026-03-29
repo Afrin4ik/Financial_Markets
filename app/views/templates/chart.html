@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Chart</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
+    <script src="/static/js/chart.js" defer></script>
+</head>
+
+<body>
+    <main class="layout chart-layout">
+        <section class="panel chart-panel">
+            <div class="chart-toolbar">
+                <button id="back-btn" type="button" class="back-btn">Назад</button>
+                <div>
+                    <p class="eyebrow">Asset Charts</p>
+                    <h1 id="chart-title">Загрузка...</h1>
+                    <p id="chart-details" class="subtitle">Подготовка графика</p>
+                </div>
+            </div>
+
+            <div id="status" class="status" aria-live="polite"></div>
+            <div id="chart" class="chart-container"></div>
+        </section>
+    </main>
+</body>
+
+</html>

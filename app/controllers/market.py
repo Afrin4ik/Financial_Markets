@@ -7,7 +7,7 @@ from ..models.schemas.market_response import ChartResponse
 from ..services.market_service import build_chart_data
 
 
-router = APIRouter(prefix="/market", tags=["market"])
+router = APIRouter(prefix="/market-data", tags=["market-data"])
 
 
 @router.get("/chart")
@@ -53,4 +53,4 @@ def get_supported_assets() -> dict[str, list[str]]:
 
 @router.get("/timeframes")
 def get_supported_timeframes() -> dict[str, list[str]]:
-    return {"supported_timeframes": TimeFrame.keys()}
+    return {"supported_timeframes": list(TimeFrame.keys())}
