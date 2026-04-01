@@ -12,6 +12,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# отключение шумных INFO-логов внутреннего клиента Tinkoff (GetCandles на каждую страницу данных)
+logging.getLogger("tinkoff.invest").setLevel(logging.WARNING)
+logging.getLogger("tinkoff.invest.logging").setLevel(logging.WARNING)
+
 logger.info("Инициализация Financial Markets API")
 
 app = FastAPI(
