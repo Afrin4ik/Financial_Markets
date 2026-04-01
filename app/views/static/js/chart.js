@@ -41,6 +41,9 @@ const ICHIMOKU_LINES = [
 
 
 function setStatus(message, type = "") {
+    if (!statusNode) {
+        return;
+    }
     statusNode.textContent = message;
     statusNode.className = `status ${type}`.trim();
 }
@@ -142,6 +145,13 @@ function buildCandlestickTrace(x, open, high, low, close) {
 
 
 function renderChart(payload) {
+    if (!chartNode) {
+        throw new Error("Контейнер графика не найден");
+    }
+    if (typeof Plotly === "undefined") {
+        throw new Error("Библиотека Plotly не загружена");
+    }
+
     const candlesLength = payload.candles.length;
     const x = new Array(candlesLength);
     const open = new Array(candlesLength);
@@ -196,6 +206,10 @@ function renderChart(payload) {
 
 
 async function init() {
+    if (!titleNode || !detailsNode || !statusNode || !backBtn) {
+        return;
+    }
+
     const params = parseQuery();
     if (!params.ticker || !params.timeframe || !params.days_count) {
         setStatus("Не переданы параметры графика. Вернитесь назад и выберите их.", "error");
@@ -208,22 +222,32 @@ async function init() {
 
     try {
         const response = await fetch(`/market-data/chart?${new URLSearchParams(params).toString()}`);
-        const payload = await response.json();
+        const payload = await response.json().catch(() => ({}));
         if (!response.ok) {
             throw new Error(payload.detail?.message || payload.detail || "Ошибка запроса");
+        }
+
+        if (!Array.isArray(payload.candles) || !payload.ichimoku) {
+            throw new Error("Получен некорректный формат данных графика");
         }
 
         renderChart(payload);
         setStatus("Данные получены", "ok");
     } catch (error) {
-        setStatus(`Ошибка: ${error.message}`, "error");
+        setStatus(`Ошибка: ${error?.message || "Неизвестная ошибка"}`, "error");
     }
 }
 
 
-backBtn.addEventListener("click", () => {
-    window.location.assign("/");
-});
+if (backBtn) {
+    backBtn.addEventListener("click", () => {
+        try {
+            window.location.assign("/");
+        } catch (error) {
+            setStatus(`Ошибка перехода: ${error?.message || "Неизвестная ошибка"}`, "error");
+        }
+    });
+}
 
 
 init();

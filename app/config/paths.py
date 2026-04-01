@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "views" / "static"
 TEMPLATES_DIR = BASE_DIR / "views" / "templates"
